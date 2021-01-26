@@ -3,16 +3,15 @@ import axios from 'axios';
 const handleResponse = (response, expectedStatusCode = 200) => {
   if (response.status === expectedStatusCode) return response.data;
   throw new Error(`Status code: ${response.response.status}
-	
-	\n${response.response}`); //\n${JSON.stringify(response.response, null, 2)}`);
+	\n${JSON.stringify(response.response.data, null, 2)}`);
 };
 
-const handleError = (error, expectedStatusCode) => {
-  throw new Error(error)
-  // if (expectedStatusCode && error.response.status !== expectedStatusCode) {
-  // throw new Error(`Status code: ${error.response.status}
-	// 		\n${JSON.stringify(error.response, null, 2)}`);
-  // return error;
+const handleError = (error, expectedStatusCode = 200) => {
+  if (expectedStatusCode && error.response.status !== expectedStatusCode) {
+    throw new Error(`Status code: ${error.response.status}
+    		\n${JSON.stringify(error.response.data, null, 2)}`);
+  }
+  return error.response.data;
 };
 
 const api = {
