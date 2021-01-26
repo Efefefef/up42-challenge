@@ -1,0 +1,26 @@
+{
+  "name": "up42-challenge",
+  "version": "1.0.0",
+  "description": "QA challendge",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Efefefef/up42-challenge.git"
+  },
+  "author": "Andrei Klimenok",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Efefefef/up42-challenge/issues"
+  },
+  "homepage": "https://github.com/Efefefef/up42-challenge#readme",
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "axios": "^0.21.1",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3"
+  }
+}
