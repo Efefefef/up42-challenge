@@ -14,7 +14,7 @@ describe('Challenge test suite', () => {
         'description': 'Workflow description',
       }
     );
-    console.log(workflowResponse)
+    // console.log(workflowResponse)
     const projectId = workflowResponse.data.id;
     const taskResponse = await api.post(`${endpoint}/workflows/${projectId}/tasks`, ACCESS_TOKEN,
       [
@@ -30,7 +30,7 @@ describe('Challenge test suite', () => {
         }
       ]
     );
-    console.log(taskResponse)
+    // console.log(taskResponse)
     const job = await api.post(`${endpoint}/workflows/${projectId}/jobs`, ACCESS_TOKEN,
       {
         "nasa-modis:1":
@@ -53,8 +53,8 @@ describe('Challenge test suite', () => {
         }
       }
     );
-    console.log(job)
-    const deleteResult = await api.delete(`${endpoint}/workflows/${projectId}`, ACCESS_TOKEN, 204);
+    // console.log(job)
+    await api.delete(`${endpoint}/workflows/${projectId}`, ACCESS_TOKEN, 204);
   });
 
 });
