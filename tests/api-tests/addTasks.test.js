@@ -29,7 +29,7 @@ describe('Add tasks to workflow', () => {
     expect(response.error.message).toBe('Unauthorized');
   });
 
-  it('Invalid parameters -> 405', async () => {
+  it('Missing data -> 405', async () => {
     const response = await api.post(`${endpoint}/workflows`, ACCESS_TOKEN, {}, 405);
     expect(response.error.message).toBe('Request method \'POST\' not supported'); // <- Incorrect error on your side
   });
