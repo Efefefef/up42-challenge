@@ -1,5 +1,5 @@
 import api from '../helpers/api';
-import { HOST, PROJECT_ID, PROJECT_API_KEY } from '../config';
+import { HOST, PROJECT_ID, PROJECT_API_KEY } from '../../config';
 
 const baseUrl = `https://${HOST}`;
 const endpoint = `${baseUrl}/projects/${PROJECT_ID}`;
