@@ -8,15 +8,11 @@ const handleResponse = (response, expectedStatusCode = 200) => {
 };
 
 const handleError = (error, expectedStatusCode) => {
-  console.log(error.response)
-  if (error.response) {
-    if (error.response.status !== expectedStatusCode) {
-      throw new Error(`Status code: ${error.response.status}
-			\n${JSON.stringify(error.response, null, 2)}`);
-    }
-    return error.response.data;
-  }
-  throw new Error('The request was made but no response was received');
+  throw new Error(error)
+  // if (expectedStatusCode && error.response.status !== expectedStatusCode) {
+  // throw new Error(`Status code: ${error.response.status}
+	// 		\n${JSON.stringify(error.response, null, 2)}`);
+  // return error;
 };
 
 const api = {
