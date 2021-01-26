@@ -3,10 +3,12 @@ import axios from 'axios';
 const handleResponse = (response, expectedStatusCode = 200) => {
   if (response.status === expectedStatusCode) return response.data;
   throw new Error(`Status code: ${response.response.status}
-	\n${JSON.stringify(response.response, null, 2)}`);
+	
+	\n${response.response}`); //\n${JSON.stringify(response.response, null, 2)}`);
 };
 
 const handleError = (error, expectedStatusCode) => {
+  console.log(error.response)
   if (error.response) {
     if (error.response.status !== expectedStatusCode) {
       throw new Error(`Status code: ${error.response.status}
@@ -18,13 +20,37 @@ const handleError = (error, expectedStatusCode) => {
 };
 
 const api = {
-  get: (url, headers, expectedStatusCode) => axios.get(url, { headers })
+  getAccessToken: ({ HOST, PROJECT_ID, PROJECT_API_KEY }) => axios.post(
+    `https://${PROJECT_ID}:${PROJECT_API_KEY}@${HOST}/oauth/token`,
+    'grant_type=client_credentials',
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then(response => handleResponse(response))
+    .then(({ access_token }) => access_token)
+    .catch(error => handleError(error)),
+  get: (url, ACCESS_TOKEN, expectedStatusCode) => axios.get(url, {
+    headers: {
+      'Authorization': `Bearer ${ACCESS_TOKEN}`
+    }
+  })
     .then(response => handleResponse(response, expectedStatusCode))
     .catch(error => handleError(error, expectedStatusCode)),
-  post: (url, data, headers, expectedStatusCode) => axios.post(url, data, { headers })
-      .then(response => handleResponse(response, expectedStatusCode))
-      .catch(error => handleError(error, expectedStatusCode)),
-  delete: (url, headers, expectedStatusCode) => axios.delete(url, { headers })
+  post: (url, ACCESS_TOKEN, data, expectedStatusCode) => axios.post(url, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${ACCESS_TOKEN}`
+    }
+  })
+    .then(response => handleResponse(response, expectedStatusCode))
+    .catch(error => handleError(error, expectedStatusCode)),
+  delete: (url, ACCESS_TOKEN, expectedStatusCode) => axios.delete(url, {
+    headers: {
+      'Authorization': `Bearer ${ACCESS_TOKEN}`
+    }
+  })
     .then(response => handleResponse(response, expectedStatusCode))
     .catch(error => handleError(error, expectedStatusCode)),
 };
